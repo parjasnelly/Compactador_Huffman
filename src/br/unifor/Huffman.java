@@ -19,9 +19,7 @@ public class Huffman {
             return;
         }
     }
-    private void genHuffmanTree(){
 
-    }
     public void compress() throws IOException {
         ascii = new int[255];
         queue = new PriorityQueue();
