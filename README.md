@@ -1,1 +1,1 @@
-# Compactador_Huffman
+# Compactador de Arquivos - Algoritmo de Huffman
