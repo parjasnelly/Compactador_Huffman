@@ -14,7 +14,7 @@ public class Node {
         this.left = null;
         this.priority = priority;
     }
-    public Node(int priority, Node right, Node left){
+    public Node(int priority, Node left, Node right){
         this.next = null;
         this.right = right;
         this.left = left;

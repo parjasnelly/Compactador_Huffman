@@ -4,6 +4,7 @@ public class PriorityQueue {
     private Node first;
     private Node last;
     private int cont;
+    private int i;
 
     public PriorityQueue() {
         cont = 0;
@@ -98,7 +99,7 @@ public class PriorityQueue {
         return -1;
     }
     public int size() {
-        return cont;
+        return i;
     }
     public void print() {
         Node curr = first;
@@ -111,6 +112,7 @@ public class PriorityQueue {
 
     }
     public Node genHuffmanTree(){
+        i = cont;
         while (cont>1){
             Node A = this.peek();
             Node B = this.peek();

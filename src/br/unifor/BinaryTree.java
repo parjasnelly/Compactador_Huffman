@@ -1,111 +1,77 @@
 package br.unifor;
 
+
 public class BinaryTree {
-    private Node root;
+    private final Node root;
     private String line = "";
-    public BinaryTree() {
-        root = null;
-    }
-    public BinaryTree(Node root){
+    private String[][] table;
+    private int cont = 0;
+    private int i;
+
+    public BinaryTree(Node root) {
         this.root = root;
     }
-    public void add(char value) {
-        if (root==null) root = new Node(value);
-        else add(value, root);
-    }
-    public void add(char value, Node root){
-        if (value<root.data){
-            if (root.left == null) root.left = new Node(value);
-            else add(value,root.left);
-        } else if (value>root.data) {
-            if (root.right == null) root.right = new Node(value);
-            else add(value,root.right);
-        }
-    }
 
-    public void clear(){
-        root = null;
-    }
-    public boolean pesquisar(char value) {
-        if (root == null) {
-            return false;
-        }
-        else {
-            return pesquisar(value, root);
-        }
-    }
-
-    private boolean pesquisar(char value, Node root) {
-        if (value == root.data) {
-            return true;
-        }
-        else if (value < root.data) {
-            if (root.left == null) {
-                return false;
-            }
-            else {
-                return pesquisar(value, root.left);
-            }
-        }
-        else if (value > root.data) {
-            if (root.right == null) {
-                return false;
-            }
-            else {
-                return pesquisar(value, root.right);
-            }
-        }
-
-        return false;
-    }
-
-    public void print() {
+    public String[][] generateTable() {
         if (root != null) {
-            printPre(root);
-            System.out.println("Pre.:"+line);
+            i= 0;
             line = "";
-            printIn(root);
-            System.out.println("In..:"+line);
+            table = new String[cont][2];
+            generateTable(root);
             line = "";
-            printPos(root);
-            System.out.println("Post:"+line);
-            line = "";
-            System.out.println("");
         }
+        return table;
     }
 
-    private void printPre(Node root) {
-        line+= " "+root.data + " = " + root.priority;
+    private void generateTable(Node root) {
+        if (root.data != '\0') {
+            //Armazena no vetor o Caractere e qual é seu código  binário compactado
+            table[i][0] = Character.toString(root.data);
+            table[i][1] = line;
+            i++;
+        }
 
         if (root.left != null) {
-            printPre(root.left);
+            line += "0";
+            generateTable(root.left);
+            line = line.substring(0, line.length() - 1);
         }
 
         if (root.right != null) {
-            printPre(root.right);
+            line += "1";
+            generateTable(root.right);
+            line = line.substring(0, line.length() - 1);
         }
     }
-    private void printIn(Node root) {
-        if (root.left != null) {
-            printIn(root.left);
+
+    public String toString() {
+        if (root != null) {
+            toString(root);
         }
-
-        line+= " "+root.data + " = " + root.priority;
-
-
-        if (root.right != null) {
-            printIn(root.right);
-        }
+        return line;
     }
-    private void printPos(Node root) {
-        if (root.left != null) {
-            printPos(root.left);
+
+    private void toString(Node root) {
+        if (root.data == '\0') line += "0";
+
+        else {
+            String binary = Integer.toBinaryString(root.data);
+            if (binary.length() < 8) {
+                binary = 0 + binary;
+            }
+            line += "1" + binary;
         }
 
-        if (root.right != null) {
-            printPos(root.right);
-        }
+        if (root.left != null) toString(root.left);
 
-        line+= " "+root.data + " = " + root.priority;
+        if (root.right != null) toString(root.right);
+    }
+
+    public int getCont() {
+        return cont;
+    }
+
+    public void setCont(int cont) {
+        this.cont = cont;
     }
 }

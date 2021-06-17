@@ -23,5 +23,5 @@ public class Main {
 		} else{
 			System.out.println("Escolha uma opção válida!");
 		}
-    }
+	}
 }
