@@ -10,20 +10,20 @@ public class Node {
     public Node(char data, int priority){
         this.data = data;
         this.next = null;
-        this.right = null;
         this.left = null;
+        this.right = null;
         this.priority = priority;
     }
     public Node(int priority, Node left, Node right){
         this.next = null;
-        this.right = right;
         this.left = left;
+        this.right = right;
         this.priority = priority;
     }
     public Node(char data){
         this.data = data;
-        this.right = null;
         this.left = null;
+        this.right = null;
     }
 }
 

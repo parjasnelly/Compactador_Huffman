@@ -2,14 +2,18 @@ package br.unifor;
 
 
 public class BinaryTree {
-    private final Node root;
+    private Node root;
     private String line = "";
+    private String treeCode;
     private String[][] table;
     private int cont = 0;
     private int i;
 
     public BinaryTree(Node root) {
         this.root = root;
+    }
+    public BinaryTree(String treeCode){
+        this.treeCode = treeCode;
     }
 
     public String[][] generateTable() {
@@ -21,6 +25,27 @@ public class BinaryTree {
             line = "";
         }
         return table;
+    }
+
+    public void reGenerateTree(){
+       this.root = new Node('\0');
+        reGenerateTree(root);
+    }
+
+    private void reGenerateTree(Node root) {
+        if (!treeCode.equals("")) {
+            if (treeCode.charAt(0) == '1') {
+                root.data = (char) Integer.parseInt(treeCode.substring(1, 9), 2);
+                treeCode = treeCode.substring(8);
+                return;
+            }
+            root.left = new Node('\0');
+            treeCode = treeCode.substring(1);
+            reGenerateTree(root.left);
+            root.right = new Node('\0');
+            treeCode = treeCode.substring(1);
+            reGenerateTree(root.right);
+        }
     }
 
     private void generateTable(Node root) {
@@ -44,7 +69,28 @@ public class BinaryTree {
         }
     }
 
+    public String decode (String code){
+        String decodedLine = "";
+        Node aroot = root;
+        while (!code.equals("")){
+            if (aroot.data != '\0') {
+                decodedLine += String.valueOf(aroot.data);
+                aroot = root;
+            }
+            if (code.charAt(0) == '0') {
+                aroot = aroot.left;
+                code = code.substring(1);
+            } else{
+                aroot = aroot.right;
+                code = code.substring(1);
+            }
+        }
+        decodedLine += String.valueOf(aroot.data);
+        return decodedLine;
+    }
+
     public String toString() {
+        line = "";
         if (root != null) {
             toString(root);
         }
@@ -56,8 +102,8 @@ public class BinaryTree {
 
         else {
             String binary = Integer.toBinaryString(root.data);
-            if (binary.length() < 8) {
-                binary = 0 + binary;
+            while (binary.length() < 8) {
+                binary = "0" + binary;
             }
             line += "1" + binary;
         }

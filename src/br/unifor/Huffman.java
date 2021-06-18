@@ -57,12 +57,24 @@ public class Huffman {
                     }
                 }
             }
+            // Adiciona as quebras de linha
+            for (var i = 0; i < tree.getCont(); i++) {
+                if (table[i][0].charAt(0)=='\n') {
+                    output.write(table[i][1]);
+                }
+            }
         }
+        System.out.println("Compressão Realizada com sucesso!");
         output.close();
     }
     public void extract() throws IOException {
+        // Lê o arquivo comprimido e re-gera a arvore binária
+        tree = new BinaryTree(input.readLine());
+        tree.reGenerateTree();
+        // Decodifica a mensagem e escreve em um novo arquivo
         output = new BufferedWriter(new FileWriter(fileName.replace(".txt","")+"_extracted.txt"));
+        output.write(tree.decode(input.readLine()));
+        System.out.println("Descompressão Realizada com sucesso!");
         output.close();
-
     }
 }
